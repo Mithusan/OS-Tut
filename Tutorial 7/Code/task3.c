@@ -11,6 +11,7 @@
 }*/
 
 int main(void){
+    int i =1;
     pid_t pid;
     pid = fork();
 
@@ -22,7 +23,7 @@ int main(void){
         //Child Process
         int pid = getpid();
         printf("Child Process PID: %d\n", pid);
-        execl("/bin/sh", "./process", NULL);
+        execl("/bin/sh", "./process", NULL);//hihiihihi
         sleep(5);
         exit(0);
     }
