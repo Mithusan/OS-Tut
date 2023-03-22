@@ -16,18 +16,18 @@ int main(void)
     else if (pid > 0)
     {
         int status;
-        waitpid(pid, &status, 0);
-        int id=getpid();
-        printf("%d\n",id);
+        
+        printf("%d parentld\n",(int)pid);
     }
     else 
     {
         pid_t pid_process = getpid();
         char * argv_list[] = {"process",NULL}; 
-        execv("process", argv_list);
-        wait(5);
-        int id=getpid();
-        printf("%d\n",id);
-        kill(pid_process, SIGINT);
+        execv(argv_list[0], argv_list);
+        exit();
+        printf("%d child \n",(int)pid);
+        sleep(5);
+        
+        kill(pid, SIGINT);
     }
 }
