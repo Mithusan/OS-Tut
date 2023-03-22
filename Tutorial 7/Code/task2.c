@@ -119,7 +119,7 @@ int main(void){
     // delete process with pid 12235
     deleted_process = delete_pid(&queue, 12235);
     if (deleted_process != NULL) {
-        printf("Deleted process: %s\n", deleted_process->pid);
+        printf("Deleted process: %d\n", deleted_process->pid);
     }
 
     queue_t* curr_node = queue;
