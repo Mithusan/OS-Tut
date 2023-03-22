@@ -4,8 +4,6 @@
 #include <signal.h>
 #include <sys/types.h>
 
-#define SHELL "/bin/sh"
-
 /*void child_process(){
     int pid = getpid();
     printf("Child Process PID: %d\n", pid);
@@ -24,7 +22,7 @@ int main(void){
         //Child Process
         int pid = getpid();
         printf("Child Process PID: %d\n", pid);
-        execl(SHELL, SHELL, "./process", command, NULL)
+        execl("/bin/sh", "./process", NULL);
         sleep(5);
         exit(0);
     }
