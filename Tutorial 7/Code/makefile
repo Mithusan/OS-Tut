@@ -9,12 +9,12 @@ debug: CFLAGS += -O0 -g3
 debug: $(EXE)
 
 process : sigtrap.o
-	clang -Wall -Wextra -std=gnu99 $^ $(LIBS) -o $@ 
+	gcc -Wall -Wextra -std=gnu99 $^ $(LIBS) -o $@ 
 task3 : task3.o
-	clang -Wall -Wextra -std=gnu99 $^ $(LIBS) -o $@ 
+	gcc -Wall -Wextra -std=gnu99 $^ $(LIBS) -o $@ 
 
 %.o : %.c
-	clang -Wall -Wextra -std=gnu99 -c $< 
+	gcc -Wall -Wextra -std=gnu99 -c $< 
 
 all : $(EXE)
 
