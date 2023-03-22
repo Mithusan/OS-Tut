@@ -2,72 +2,95 @@
 #include <stdlib.h>
 #include <string.h>
 
+struct queue *headPtr, head;
+
 #define MAX_NAME_LEN 256
 #define MAX_LINE_LEN 1024
 
 // Structure for the process
-typedef struct process {
-    char name[MAX_NAME_LEN];
+struct proc {
+    char name[256];
     int priority;
     int pid;
     int runtime;
-} proc;
+};
 
 // Structure for the linked list
-typedef struct linked_list {
-    proc process;
-    struct linked_list *next;
-} queue;
+struct queue {
+    struct proc process;
+    struct queue *linkedList;
+};
 
-// Function to add process to the linked list
-void push(queue **head, proc process) {
-    queue *new_node = (queue*) malloc(sizeof(queue));
-    new_node->process = process;
-    new_node->next = *head;
-    *head = new_node;
+//Adds a node to the tail
+void push(struct proc process) {
+    struct queue newNode;
+    newNode.process = process;
+    *traverse(head, 200).linkedList = newNode;
+}
+
+//used to find a node in a chain of linked lists
+struct queue traverse(struct queue head, int index){
+    struct queue currIndex = head;
+    int i = 0;
+    do {
+        if (i < index){
+            currIndex = *currIndex.linkedList;
+        }
+        else if (i >= index){
+            return currIndex;
+        }
+        i++;
+    } while(currIndex.linkedList != NULL);
+
+    return currIndex;
 }
 
 int main() {
-    queue *head = NULL;
-    char line[MAX_LINE_LEN];
-    char *token;
-    proc process;
+    //file setup
+    struct proc *headProcPtr, headProc;
 
-    // Open the file containing the processes
-    FILE *file = fopen("processes.txt", "r");
+    char path[128];
 
-    if (file == NULL) {
-        perror("Error opening file");
-        return EXIT_FAILURE;
+    printf("Please enter the path of the process.txt...\n");
+    scanf("%[^\n]s", path);
+
+    FILE *processFile = fopen(path, "r");
+
+    if (processFile == NULL){
+        printf("No file in that location...\n");
+        return 1;
     }
 
-    // Read the file line by line
-    while (fgets(line, MAX_LINE_LEN, file) != NULL) {
-        // Parse the line and create the process struct
-        token = strtok(line, ",");
-        strncpy(process.name, token, MAX_NAME_LEN);
-        token = strtok(NULL, ",");
-        process.priority = atoi(token);
-        token = strtok(NULL, ",");
-        process.pid = atoi(token);
-        token = strtok(NULL, ",");
-        process.runtime = atoi(token);
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
 
-        // Add the process to the linked list
-        push(&head, process);
-    }
+    struct proc procs[10];
 
-    // Close the file
-    fclose(file);
+    //j is the currecnt procs number listed
+    int j = 0;
 
-    // Iterate through the linked list and print the processes
-    queue *current = head;
-    while (current != NULL) {
-        printf("Name: %s, Priority: %d, PID: %d, Runtime: %d\n",
-               current->process.name, current->process.priority,
-               current->process.pid, current->process.runtime);
-        current = current->next;
-    }
+    //line contains the text and read contains the line length
+    while ((read = getline(&line, &len, processFile)) != -1) {
+        int i = 0;
+        int iterationID = 0;
+        char buffer[128] = "";
 
-    return EXIT_SUCCESS;
+        printf("%s", line);
+
+        //read until your first comma
+        for (i = 0; i < read; i++){
+            if ((!line[iterationID]) == ','){
+                buffer[i] = line[iterationID];
+                printf(line[iterationID]);
+            }
+            else {
+                buffer[i] = "\0";
+                break;
+            }
+            iterationID++;
+        }
+
+        strcpy(procs[j].name, buffer);       
+        buffer[128] = "";
 }
