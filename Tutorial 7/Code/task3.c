@@ -14,8 +14,8 @@ int main(void){
     } 
     else if (pid == 0){
         //Child Process
-        int pid = getpid();
-        printf("Child Process PID: %d\n", pid);
+        int c_pid = getpid();
+        printf("Child Process PID: %d\n", c_pid);
         char * argv_list[] = {"process",NULL}; 
         execv(argv_list[0], argv_list);
         exit(0);

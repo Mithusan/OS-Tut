@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 
 int main(void){
     pid_t pid;
@@ -12,14 +13,15 @@ int main(void){
         perror("Fork failed.");
         exit(1);
     } 
+    
     else if (pid == 0){
 		//Child Process
-		int pid = getpid();
-        printf("Child Process PID: %d\n", pid);
+		int c_pid = getpid();
+        printf("Child Process PID: %d\n", c_pid);
         char * argv_list[] = {"process",NULL}; 
         execv(argv_list[0], argv_list);
+        
 		exit(0);
-		
 	}
     else {
 		//Parent Process
@@ -27,10 +29,9 @@ int main(void){
 		int status;
 		sleep(5);
         kill(pid, SIGTSTP);
-		sleep(3);
+		sleep(10);
 		kill(pid, SIGCONT);
-		waitpid(pid, NULL, 0);
-		kill(pid, SIGINT);
+        waitpid(pid, &status, 0);
 		exit(0);
     }
 }
