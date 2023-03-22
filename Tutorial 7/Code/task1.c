@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_NAME_LEN 256
+#define MAX_LINE_LEN 1024
+
 struct proc {
-    char name[256];
+    char name[MAX_NAME_LEN];
     int priority;
     int pid;
     int runtime;
@@ -40,5 +43,16 @@ void push(struct proc process) {
 } 
 
 int main(void){
+    //Variables
+    char line[MAX_LINE_LEN];
+    char *token;
+    struct proc process;
     
+    // Open the file containing the processes
+    FILE *file = fopen("processes.txt", "r");
+
+    if (file == NULL) {
+        perror("Error opening file");
+        return EXIT_FAILURE;
+    }
 }
