@@ -122,6 +122,8 @@ int main(void){
         printf("Deleted process: %d\n", deleted_process->pid);
     }
 
+    printf("\n\n");
+
     queue_t* curr_node = queue;
     while (curr_node != NULL) {
         printf("Name: %s\nPriority: %d\nPID: %d\nRuntime: %d", 
