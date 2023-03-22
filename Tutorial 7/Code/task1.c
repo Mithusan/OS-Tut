@@ -14,7 +14,7 @@ typedef struct process {
 
 typedef struct linked_list {
     proc process;
-    struct linked_list *next;
+    struct queue linked_list;
 } queue;
 
 void push(proc process){
