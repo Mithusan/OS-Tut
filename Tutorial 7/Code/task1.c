@@ -17,11 +17,8 @@ typedef struct linked_list {
     struct linked_list *next;
 } queue;
 
-void push(queue **head, proc process){
-    queue *new_node = (queue*) malloc(sizeof(queue));
-    new_node->process = process;
-    new_node->next = *head;
-    *head = new_node;
+void push(proc process){
+    
 }
 
 int main(void){
