@@ -4,11 +4,11 @@
 #include <signal.h>
 #include <sys/types.h>
 
-void child_process(){
+/*void child_process(){
     int pid = getpid();
     printf("Child Process PID: %d\n", pid);
     sleep(5);
-}
+}*/
 
 int main(void){
     pid_t pid;
@@ -16,21 +16,23 @@ int main(void){
 
     if (pid == -1){
         perror("Fork failed.");
-        exit(EXIT_FAILURE);
+        exit(1);
     } 
     else if (pid == 0){
         //Child Process
-        child_process();
-        exit(EXIT_SUCCESS);
+        int pid = getpid();
+        printf("Child Process PID: %d\n", pid);
+        sleep(5);
+        exit(0);
     }
     else {
         //Parent Process
         sleep(1); //Wait for Child Process to Start
         printf("Sending LeSignalJames to Child Process\n");
         kill(pid, SIGINT);
-        wait(NULL);//Wait for Child Process to terminate
+        waitpid(pid, &status, 0);//Wait for Child Process to terminate
         printf("LeChild has been Killed, Counter Terrorist Win\n");
-        exit(EXIT_SUCCESS);
+        exit(0);
     }
 }
 
