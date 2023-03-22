@@ -16,18 +16,17 @@ int main(void)
     else if (pid > 0)
     {
         int status;
-        
+        wait(pid, &status,0);
         printf("%d parentld\n",(int)pid);
     }
     else 
     {
         pid_t pid_process = getpid();
-        char * argv_list[] = {"process",NULL}; 
-        execv(argv_list[0], argv_list);
-        exit();
+        char * argv_list[] = {"process","./sigtrap",NULL};
+        execv(argv_list[1], argv_list);
         printf("%d child \n",(int)pid);
         sleep(5);
-        
+        printf("%d parentld\n",(int)parent);
         kill(pid, SIGINT);
     }
 }
