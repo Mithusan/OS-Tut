@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
             fflush(stdout);
             sigemptyset (&mask);            // unblock SIGSTP if necessary (BSD/OS X)
             sigaddset (&mask, SIGTSTP);
-            sigprocmask (SIG_UNBLOCK, &mask, NULL);
+            sigprocmask(SIG_UNBLOCK, &mask, NULL);
             signal(SIGTSTP, SIG_DFL);       // reset trap to default
             raise (SIGTSTP);                // now suspend ourselves
             signal(SIGTSTP, SignalHandler); // reset trap on return from suspension

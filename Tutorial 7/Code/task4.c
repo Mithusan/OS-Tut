@@ -13,21 +13,24 @@ int main(void){
         exit(1);
     } 
     else if (pid == 0){
-        //Child Process
-        int pid = getpid();
+		//Child Process
+		int pid = getpid();
         printf("Child Process PID: %d\n", pid);
         char * argv_list[] = {"process",NULL}; 
         execv(argv_list[0], argv_list);
-        exit(0);
-    }
+		exit(0);
+		
+	}
     else {
-        //Parent Process
+		//Parent Process
         // wait 5 seconds then send interupt signal
-        sleep(5);
+		int status;
+		sleep(5);
         kill(pid, SIGTSTP);
-		sleep(10);
+		sleep(3);
 		kill(pid, SIGCONT);
-		waitpid(NULL);
-        exit(0);
+		waitpid(pid, NULL, 0);
+		kill(pid, SIGINT);
+		exit(0);
     }
 }
