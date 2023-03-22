@@ -1,13 +1,12 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <signal.h>
 #include <string.h>
+#include <sys/types.h>
 
 struct queue *headPtr, head;
 
-#define MAX_NAME_LEN 256
-#define MAX_LINE_LEN 1024
-
-// Structure for the process
 struct proc {
     char name[256];
     int priority;
@@ -15,7 +14,6 @@ struct proc {
     int runtime;
 };
 
-// Structure for the linked list
 struct queue {
     struct proc process;
     struct queue *linkedList;
@@ -26,6 +24,11 @@ void push(struct proc process) {
     struct queue newNode;
     newNode.process = process;
     *traverse(head, 200).linkedList = newNode;
+}
+
+//pops a node from the front of the head and reads it
+struct proc pop() {
+    *traverse(head, 200).linkedList = NULL;
 }
 
 //used to find a node in a chain of linked lists
@@ -45,7 +48,13 @@ struct queue traverse(struct queue head, int index){
     return currIndex;
 }
 
-int main() {
+int delete_pid(int pid){
+
+
+    return NULL;
+}
+
+int main(void){
     //file setup
     struct proc *headProcPtr, headProc;
 
@@ -93,4 +102,5 @@ int main() {
 
         strcpy(procs[j].name, buffer);       
         buffer[128] = "";
+    }
 }
