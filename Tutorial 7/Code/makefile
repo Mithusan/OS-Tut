@@ -1,22 +1,8 @@
-LIBS = 
-SOURCES = task3.c sigtrap.c
-OBJECTS = $(subst .c,.o,$(SOURCES))
-EXE = process task3
-.PHONY: clean help
+process: sigtrap.c
+	gcc -Wall -Wextra -std=gnu99 sigtrap.c -o process
 
-.PHONY: debug
-debug: CFLAGS += -O0 -g3
-debug: $(EXE)
+task3: task3.c
+	gcc -Wall -Wextra -std=gnu99 task3.c -o task3
 
-process : sigtrap.o
-	gcc -Wall -Wextra -std=gnu99 $^ $(LIBS) -o $@ 
-task3 : task3.o
-	gcc -Wall -Wextra -std=gnu99 $^ $(LIBS) -o $@ 
-
-%.o : %.c
-	gcc -Wall -Wextra -std=gnu99 -c $< 
-
-all : $(EXE)
-
-clean:
-	rm -f $(OBJECTS) $(EXE) *~
+task4: task4.c
+	gcc -Wall -Wextra -std=gnu99 task4.c -o task4
