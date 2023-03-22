@@ -5,6 +5,8 @@
 #include <string.h>
 #include <sys/types.h>
 
+struct queue head;
+
 typedef struct process {
     char name[256];
     int priority;
