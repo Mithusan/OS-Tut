@@ -27,10 +27,10 @@ int main(void){
     }
     else {
         //Parent Process
-        sleep(1); //Wait for Child Process to Start
+        wait(NULL);//Wait for Child Process to terminate
+        //sleep(1); //Wait for Child Process to Start
         printf("Sending LeSignalJames to Child Process\n");
         kill(pid, SIGINT);
-        waitpid(pid, &status, 0);//Wait for Child Process to terminate
         printf("LeChild has been Killed, Counter Terrorist Win\n");
         exit(0);
     }
