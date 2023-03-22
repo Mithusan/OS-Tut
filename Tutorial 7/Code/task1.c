@@ -5,54 +5,72 @@
 #define MAX_NAME_LEN 256
 #define MAX_LINE_LEN 1024
 
-struct proc {
+typedef struct proc{
     char name[MAX_NAME_LEN];
     int priority;
     int pid;
     int runtime;
-};
+}proc_t;
 
-struct queue {
-    struct proc process;
-    struct queue *linked_list;
-};
+typedef struct queue {
+    proc_t process;
+    struct queue* next;
+}queue_t;
 
-struct queue head;
 
-//used to find a node in a chain of linked lists
-struct queue traverse(struct queue head, int index){
-    struct queue currIndex = head;
-    int i = 0;
-    do {
-        if (i < index){
-            currIndex = *currIndex.linked_list;
-        }
-        else if (i >= index){
-            return currIndex;
-        }
-        i++;
-    } while(currIndex.linked_list != NULL);
-
-    return currIndex;
+void push(queue_t** queue, proc_t process) {
+    queue_t* new_node = (queue_t*) malloc(sizeof(queue_t));
+    new_node->process = process;
+    new_node->next = *queue;
+    *queue = new_node;
 }
-
-void push(struct proc process) {
-    struct queue newNode;
-    newNode.process = process;
-    *traverse(head, 200).linked_list = newNode;
-} 
 
 int main(void){
     //Variables
     char line[MAX_LINE_LEN];
-    char *token;
-    struct proc process;
+    char* name_str;
+    char* priority_str;
+    char* pid_str;
+    char* runtime_str;
+    proc_t process;
+    queue_t* queue = NULL;
     
     // Open the file containing the processes
-    FILE *file = fopen("processes.txt", "r");
+    FILE *fp = fopen("processes.txt", "r");
 
-    if (file == NULL) {
+    if (fp == NULL) {
         perror("Error opening file");
         return EXIT_FAILURE;
     }
+
+    // Read the file line by line
+    while (fgets(line, MAX_LINE_LEN, fp) != NULL) {
+        // extract fields from line
+        name_str = strtok(line, ",");
+        priority_str = strtok(NULL, ",");
+        pid_str = strtok(NULL, ",");
+        runtime_str = strtok(NULL, ",");
+
+        // parse values and create process struct
+        strncpy(process.name, name_str, MAX_NAME_LEN);
+        process.priority = atoi(priority_str);
+        process.pid = atoi(pid_str);
+        process.runtime = atoi(runtime_str);
+
+        // add process to queue
+        push(&queue, process);
+    }
+
+    // Close the file
+    fclose(fp);
+
+    queue_t* curr_node = queue;
+    while (curr_node != NULL) {
+        printf("Name: %s, Priority: %d, PID: %d, Runtime: %d\n", 
+            curr_node->process.name, curr_node->process.priority,
+            curr_node->process.pid, curr_node->process.runtime);
+        curr_node = curr_node->next;
+    }
+
+    return 0;
 }
