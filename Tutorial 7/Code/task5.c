@@ -94,13 +94,12 @@ int main(void){
         // extract fields from line
         name_str = strtok(line, ",");
         priority_str = strtok(NULL, ",");
-        pid_str = "0";
         runtime_str = strtok(NULL, ",");
 
         // parse values and create process struct
         strncpy(process.name, name_str, MAX_NAME_LEN);
         process.priority = atoi(priority_str);
-        process.pid = atoi(pid_str);
+        process.pid = 0;
         process.runtime = atoi(runtime_str);
 
         // add process to queue
