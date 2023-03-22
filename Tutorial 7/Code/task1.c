@@ -66,10 +66,12 @@ int main(void){
 
     queue_t* curr_node = queue;
     while (curr_node != NULL) {
-        printf("Name: %s, Priority: %d, PID: %d, Runtime: %d\n", 
+        printf("Name: %s\nPriority: %d\nPID: %d\nRuntime: %d", 
             curr_node->process.name, curr_node->process.priority,
             curr_node->process.pid, curr_node->process.runtime);
         curr_node = curr_node->next;
+
+        printf("\n\n************************\n");
     }
 
     return 0;
