@@ -71,7 +71,7 @@ int main(void){
             curr_node->process.pid, curr_node->process.runtime);
         curr_node = curr_node->next;
 
-        printf("\n\n************************\n");
+        printf("\n************************\n");
     }
 
     return 0;
