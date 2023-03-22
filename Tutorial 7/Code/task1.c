@@ -5,8 +5,6 @@
 #include <string.h>
 #include <sys/types.h>
 
-struct queue head;
-
 typedef struct process {
     char name[256];
     int priority;
@@ -19,7 +17,7 @@ typedef struct linked_list {
     struct linked_list *next;
 } queue;
 
-void push(proc process){
+void push(queue **head, proc process){
     queue *new_node = (queue*) malloc(sizeof(queue));
     new_node->process = process;
     new_node->next = *head;
