@@ -11,7 +11,8 @@ int main(void)
 
     if (pid == -1)
     {
-        printf("Fork failed.");
+        perror("Fork failed.");
+        exit(EXIT_FAILURE);
     } 
     else if (pid > 0)
     {
