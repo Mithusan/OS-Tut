@@ -24,6 +24,7 @@ int main(void){
         //Parent Process
         // wait 5 seconds then send interupt signal
         sleep(5);
+        printf("\n[PID %d] is being suspended.\n", pid);
         kill(pid, SIGINT);
         exit(0);
     }

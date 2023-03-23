@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 
 int main(void){
     pid_t pid;
@@ -28,9 +29,13 @@ int main(void){
 		int status;
 		sleep(5);
         kill(pid, SIGTSTP);
-		sleep(10);
+        sleep(1);
+        printf("\n[PID %d] is being suspended.\n", pid);
+		sleep(9);
+        printf("\n[PID %d] is now resuming.\n\n", pid);
 		kill(pid, SIGCONT);
         waitpid(pid, &status, 0);
+        printf("\n[PID %d] has been terminated.\n", pid);
 		exit(0);
     }
 }
