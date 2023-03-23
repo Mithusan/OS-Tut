@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
     if (cycle <= 0) cycle = 1;
 
     for (i = 0; i < cycle;) {          // tick 
-
+    colour = colours[i % N_COLOUR];
         if (signal_SIGCONT) {
             signal_SIGCONT = FALSE;
             fprintf(stdout,"%s%7d; SIGCONT" BLACK NORMAL "\n", colour, (int) pid);
@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
             fflush(stdout);
             sigemptyset (&mask);            // unblock SIGSTP if necessary (BSD/OS X)
             sigaddset (&mask, SIGTSTP);
-            sigprocmask (SIG_UNBLOCK, &mask, NULL);
+            sigprocmask(SIG_UNBLOCK, &mask, NULL);
             signal(SIGTSTP, SIG_DFL);       // reset trap to default
             raise (SIGTSTP);                // now suspend ourselves
             signal(SIGTSTP, SignalHandler); // reset trap on return from suspension
