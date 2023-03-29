@@ -45,7 +45,7 @@ struct proc_tree* insert_into_bt(struct proc_tree* root, struct proc_tree* pr, b
             root->left = pr;
         }
         else if(!root->right){
-            root->right = prz
+            root->right = pr;
         }
 
         *inserted = true;
@@ -66,12 +66,12 @@ void print_bt(struct proc_tree* root){
     }
 
     print_bt(root->left);
-    printf("process -> {name: %s, parent: %s, priority: %d, memory: %d MB}\n", root->process.name, root->process.parent, root->process.priority, root->process.memory);
+    printf("process -> {name: %s, parent: %s, priority: %d, memory: %d MB}\n\n", root->process.name, root->process.parent, root->process.priority, root->process.memory);
     print_bt(root->right);
 }
 
 int main(int argc, char *argv[]){
-    FILE *fp = fopen(processes_tree, "r");
+    FILE *fp = fopen("processes_tree.txt", "r");
     char *line = NULL;
     size_t length = 0;
     ssize_t read;
@@ -111,7 +111,6 @@ int main(int argc, char *argv[]){
         root = insert_into_bt(root, new_proc(parent, name, priority, memory), &inserted);
     }
     free(line);
-    printf("inorder traversal\n");
     print_bt(root);
     return EXIT_SUCCESS;
 }
