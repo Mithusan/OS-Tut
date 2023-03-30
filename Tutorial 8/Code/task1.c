@@ -64,7 +64,8 @@ void print_bt(struct proc_tree* root){
     }
 
     print_bt(root->left);
-    printf("process -> {name: %s, parent: %s, priority: %d, memory: %d MB}\n\n", root->process.name, root->process.parent, root->process.priority, root->process.memory);
+    printf("\nprocess name: %s\n\nparent: %s\t| priority: %d\t| memory: %d MB\n\n", root->process.name, root->process.parent, root->process.priority, root->process.memory);
+    printf("================================================================================\n");
     print_bt(root->right);
 }
 
